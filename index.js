@@ -75,6 +75,11 @@ const pool = new Pool({
   app.get("/create", (req, res) => {
     res.render("create", { model: {} });
   });
+
+  // GET /createadherent
+  app.get("/createadherent", (req, res) => {
+    res.render("createadherent", { model: {} });
+  });
   
   // POST /create
   app.post("/create", (req, res) => {
@@ -85,6 +90,18 @@ const pool = new Pool({
         return console.error(err.message);
       }
       res.redirect("/livres");
+    });
+  });
+
+  // POST /createadherent
+  app.post("/createadherent", (req, res) => {
+    const sql = "INSERT INTO ADHERENT (numAdherent, nomAdherent, prenomAdherent, promotionAdherent, roleAdherent, telAdherent, mailAdherent, adresseAdherent, ardoiseAdherent) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+    const book = [req.body.num, req.body.nom, req.body.prenom, req.body.promo, req.body.role, req.body.tel, req.body.mail, req.body.adresse, req.body.ardoise];
+    pool.query(sql, book, (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.redirect("/adherents");
     });
   });
   
@@ -160,5 +177,29 @@ const pool = new Pool({
         return console.error(err.message);
       }
       res.redirect("/livres");
+    });
+  });
+
+  // GET /delete/5
+  app.get("/deleteadherent/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM ADHERENT WHERE numAdherent = $1";
+    pool.query(sql, [id], (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.render("deleteadherent", { model: result.rows[0] });
+    });
+  });
+  
+  // POST /delete/5
+  app.post("/deleteadherent/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = "DELETE FROM ADHERENT WHERE numAdherent = $1";
+    pool.query(sql, [id], (err, result) => {
+      if (err) {s
+        return console.error(err.message);
+      }
+      res.redirect("/adherents");
     });
   });
