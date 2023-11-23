@@ -1,0 +1,32 @@
+<%- include("../_header") -%>
+
+<h1>Modifier une sortie</h1>
+
+<form action="/sorties/edit/<%= model.idsortie %>" method="post">
+  <div class="form-horizontal">
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2" for="id">Id Sortie :</label>
+      <div class="col-sm-8">
+        <input readonly class="form-control" name="id" value="<%= model.idsortie %>" />
+      </div>
+    </div>
+    
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2" for="date">Date :</label>
+      <div class="col-sm-8">
+        <input autofocus class="form-control" name="date" value="<%= moment(model.datesortie).format('YYYY-MM-DD')  %>" />
+      </div>
+    </div>
+    <%- include("_editor") -%>
+
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2"></label>
+      <div class="col-sm-10">
+        <input type="submit" value="Modifier" class="btn btn-default btn-warning" />
+        <a class="btn btn-outline-dark cancel" href="/sorties">Annuler</a>
+      </div>
+    </div>
+  </div>
+</form>
+
+<%- include("../_footer") -%>
