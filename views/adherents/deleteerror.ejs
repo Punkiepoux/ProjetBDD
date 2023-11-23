@@ -1,0 +1,14 @@
+<%- include("_header") -%>
+
+<h1>Effacer un adhérent</h1>
+
+<form action="/adherent/delete" method="post">
+    <div class="form-horizontal">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong><%=  message  %></strong>
+        </div>
+        <a class="btn btn-outline-dark cancel" href="/adherents">Annuler</a>
+    </div>
+</form>
+
+<%- include("_footer") -%>

@@ -1,0 +1,41 @@
+<%- include("../_header") -%>
+
+<h1> Agenda du BDE </h1>
+
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Id Sortie</th>
+        <th>Nom</th>
+        <th>Date</th>
+        <th>Prix</th>
+        <th>Nombre de participants</th>
+        <th>Lieu</th>
+        <th>Reference Produit</th>
+        <th class="d-print-none">
+          <a class="btn btn-sm btn-success" href="/sorties/create">Ajouter</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (const sortie of model) { %>
+        <tr>
+          <td><%= sortie.idsortie  %></td>
+          <td><%= sortie.nomsortie  %></td>
+          <td><%=  moment(sortie.datesortie).format('YYYY-MM-DD')  %></td>
+          <td><%= sortie.prixsortie   %></td>
+          <td><%= sortie.nbparticipants   %></td>
+          <td><%= sortie.lieusortie   %></td>
+          <td><%= sortie.idproduit   %></td>
+          <td class="d-print-none">
+            <a class="btn btn-sm btn-warning" href="/sorties/edit/<%= sortie.idsortie %>">Modifier</a>
+            <a class="btn btn-sm btn-danger" href="/sorties/delete/<%= sortie.idsortie %>">Effacer</a>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include("../_footer") -%>
