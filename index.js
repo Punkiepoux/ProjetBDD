@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+var moment = require("moment");
 const { Pool } = require("pg");
 
 // Création du serveur Express
@@ -12,7 +13,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
 
 const pool = new Pool({
-    user: "postgres",
+    user: "dba",
     host: "localhost",
     database: "scamdb",
     password: "mysecretpassword",
@@ -22,11 +23,11 @@ const pool = new Pool({
 
 
     // Alimentation de la table
-    const sql_insert = `INSERT INTO ADHERENT (numAdherent, nomAdherent, prenomAdherent, promotionAdherent, roleAdherent, telAdherent, mailAdherent, adresseAdherent, ardoiseAdherent)
-    VALUES
-    (1, 'Doe', 'John', 'A1', 'Membre', '123456789', 'john.doe@example.com', '123 Street, City', 0),
-    (2, 'Smith', 'Jane', 'A2', 'Président', '987654321', 'jane.smith@example.com', '456 Avenue, Town', 0),
-    (3, 'Johnson', 'Bob', 'ALUMNIE', 'Ancien', '555555555', 'bob.johnson@example.com', '789 Road, Village', 0);`;
+    const sql_insert = `INSERT INTO TRANSACTION (idTransaction, typeTransaction, dateTransaction, methodePaiement, numAdherent, montantTransaction)
+    VALUES 
+        (1, 'VENTEBDE', '2023-05-12', 'CB', 1, 75.00),
+        (2, 'ACHATBDE', '2023-06-25', 'ESPECES', 2, 120.00),
+        (3, 'AUTRE', '2023-07-05', 'ARDOISE', 3, 30.00);`;
     pool.query(sql_insert, [], (err, result) => {
       if (err) {
         return console.error(err.message);
@@ -60,6 +61,8 @@ const pool = new Pool({
     res.render("data", { model: test });
   });
   
+
+//ADHERENTS
   // GET /adherent
   app.get("/adherents", (req, res) => {
     const sql = "SELECT * FROM adherent ORDER BY nomAdherent";
@@ -67,34 +70,19 @@ const pool = new Pool({
       if (err) {
         return console.error(err.message);
       }
-      res.render("adherents", { model: result.rows });
+      res.render("adherents/index", { model: result.rows });
     });
   });
   
-  // GET /create
-  app.get("/create", (req, res) => {
-    res.render("create", { model: {} });
-  });
 
   // GET /createadherent
-  app.get("/createadherent", (req, res) => {
-    res.render("createadherent", { model: {} });
-  });
-  
-  // POST /create
-  app.post("/create", (req, res) => {
-    const sql = "INSERT INTO Livres (Titre, Auteur, Commentaires) VALUES ($1, $2, $3)";
-    const book = [req.body.Titre, req.body.Auteur, req.body.Commentaires];
-    pool.query(sql, book, (err, result) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      res.redirect("/livres");
-    });
+  app.get("/adherents/create", (req, res) => {
+    res.render("adherents/create", { model: {} });
   });
 
-  // POST /createadherent
-  app.post("/createadherent", (req, res) => {
+
+  // POST /create
+  app.post("/adherents/create", (req, res) => {
     const sql = "INSERT INTO ADHERENT (numAdherent, nomAdherent, prenomAdherent, promotionAdherent, roleAdherent, telAdherent, mailAdherent, adresseAdherent, ardoiseAdherent) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)";
     const book = [req.body.num, req.body.nom, req.body.prenom, req.body.promo, req.body.role, req.body.tel, req.body.mail, req.body.adresse, req.body.ardoise];
     pool.query(sql, book, (err, result) => {
@@ -105,45 +93,21 @@ const pool = new Pool({
     });
   });
   
-  // GET /edit/5
-  app.get("/edit/:id", (req, res) => {
-    const id = req.params.id;
-    const sql = "SELECT * FROM Livres WHERE Livre_ID = $1";
-    pool.query(sql, [id], (err, result) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      res.render("edit", { model: result.rows[0] });
-    });
-  });
   
-  // GET /edit/5
-  app.get("/editadherent/:id", (req, res) => {
+  // GET /edit
+  app.get("/adherents/edit/:id", (req, res) => {
     const id = req.params.id;
     const sql = "SELECT * FROM ADHERENT WHERE numAdherent = $1";
     pool.query(sql, [id], (err, result) => {
       if (err) {
         return console.error(err.message);
       }
-      res.render("editadherent", { model: result.rows[0] });
+      res.render("adherents/edit", { model: result.rows[0] });
     });
   });
 
-  // POST /edit/5
-  app.post("/edit/:id", (req, res) => {
-    const id = req.params.id;
-    const book = [req.body.Titre, req.body.Auteur, req.body.Commentaires, id];
-    const sql = "UPDATE Livres SET Titre = $1, Auteur = $2, Commentaires = $3 WHERE (Livre_ID = $4)";
-    pool.query(sql, book, (err, result) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      res.redirect("/livres");
-    });
-  });
-  
-    // POST /edit/5
-    app.post("/editadherent/:id", (req, res) => {
+    // POST /edit
+    app.post("/adherents/edit/:id", (req, res) => {
         const id = req.params.id;
         const book = [req.body.nom, req.body.prenom, req.body.promo, req.body.role, req.body.tel, req.body.mail, req.body.adresse, req.body.ardoise, id];
         const sql = "UPDATE ADHERENT SET nomAdherent  = $1, prenomAdherent  = $2, promotionAdherent   = $3, roleAdherent  =$4, telAdherent =$5, mailAdherent  =$6, adresseAdherent =$7, ardoiseAdherent =$8 WHERE numAdherent = $9";
@@ -156,44 +120,20 @@ const pool = new Pool({
       });
 
 
-  // GET /delete/5
-  app.get("/delete/:id", (req, res) => {
-    const id = req.params.id;
-    const sql = "SELECT * FROM Livres WHERE Livre_ID = $1";
-    pool.query(sql, [id], (err, result) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      res.render("delete", { model: result.rows[0] });
-    });
-  });
-  
-  // POST /delete/5
-  app.post("/delete/:id", (req, res) => {
-    const id = req.params.id;
-    const sql = "DELETE FROM Livres WHERE Livre_ID = $1";
-    pool.query(sql, [id], (err, result) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      res.redirect("/livres");
-    });
-  });
-
-  // GET /delete/5
-  app.get("/deleteadherent/:id", (req, res) => {
+  // GET /delete
+  app.get("/adherents/delete/:id", (req, res) => {
     const id = req.params.id;
     const sql = "SELECT * FROM ADHERENT WHERE numAdherent = $1";
     pool.query(sql, [id], (err, result) => {
       if (err) {
         return console.error(err.message);
       }
-      res.render("deleteadherent", { model: result.rows[0] });
+      res.render("adherents/delete", { model: result.rows[0] });
     });
   });
   
-  // POST /delete/5
-  app.post("/deleteadherent/:id", (req, res) => {
+  // POST /delete
+  app.post("/adherents/delete/:id", (req, res) => {
     const id = req.params.id;
     const sql = "DELETE FROM ADHERENT WHERE numAdherent = $1";
     pool.query(sql, [id], (err, result) => {
@@ -201,5 +141,251 @@ const pool = new Pool({
         return console.error(err.message);
       }
       res.redirect("/adherents");
+    });
+  });
+
+  //PRODUITS
+  // GET /produits
+  app.get("/produits", (req, res) => {
+    const sql = "SELECT * FROM produit ORDER BY idproduit";
+    pool.query(sql, [], (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.render("produits/index", { model: result.rows });
+    });
+  });
+  
+
+  // GET /create
+  app.get("/produits/create", (req, res) => {
+    res.render("produits/create", { model: {} });
+  });
+
+
+  // POST /create
+  app.post("/produits/create", (req, res) => {
+    const sql = "INSERT INTO PRODUIT (idProduit , nomProduit , qteProduitEnStock , prixAchatProduit , prixVenteProduit , typeProduit) VALUES($1, $2, $3, $4, $5, $6)";
+    const book = [req.body.id, req.body.nom, req.body.stock, req.body.achat, req.body.vente, req.body.type];
+    pool.query(sql, book, (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.redirect("/produits");
+    });
+  });
+  
+  
+  // GET /edit
+  app.get("/produits/edit/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM PRODUIT WHERE idproduit = $1";
+    pool.query(sql, [id], (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.render("produits/edit", { model: result.rows[0] });
+    });
+  });
+
+    // POST /edit
+    app.post("/produits/edit/:id", (req, res) => {
+        const id = req.params.id;
+        const book = [req.body.nom, req.body.stock, req.body.achat, req.body.vente, req.body.type, id];
+        const sql = "UPDATE PRODUIT SET nomProduit  = $1, qteProduitEnStock   = $2, prixAchatProduit  =$3, prixVenteProduit =$4, typeProduit  =$5 WHERE idProduit = $6";
+        pool.query(sql, book, (err, result) => {
+          if (err) {
+            return console.error(err.message);
+          }
+          res.redirect("/produits");
+        });
+      });
+
+
+  // GET /delete
+  app.get("/adheproduitsrents/delete/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM PRODUIT WHERE idProduit = $1";
+    pool.query(sql, [id], (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.render("produits/delete", { model: result.rows[0] });
+    });
+  });
+  
+  // POST /delete
+  app.post("/produits/delete/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = "DELETE FROM PRODUIT WHERE idProduit = $1";
+    pool.query(sql, [id], (err, result) => {
+      if (err) {s
+        return console.error(err.message);
+      }
+      res.redirect("/produits");
+    });
+  });
+
+  //Sorties
+  // GET /sorties
+  app.get("/sorties", (req, res) => {
+    const sql = "SELECT * FROM SORTIE ORDER BY dateSortie";
+    pool.query(sql, [], (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.render("sorties/index", { model: result.rows , moment: moment });
+    });
+  });
+  
+
+  // GET /create
+  app.get("/sorties/create", (req, res) => {
+    res.render("sorties/create", { model: {} , moment: moment });
+  });
+
+
+  // POST /create
+  app.post("/sorties/create", (req, res) => {
+    const sql = "INSERT INTO SORTIE (idSortie, nomSortie, dateSortie, prixSortie, nbParticipants, lieuSortie, idProduit) VALUES($1, $2, $3, $4, $5, $6, $7)";
+    const book = [req.body.id, req.body.nom, req.body.date, req.body.prix, req.body.nb, req.body.lieu, req.body.prod];
+    pool.query(sql, book, (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.redirect("/sorties");
+    });
+  });
+  
+  
+  // GET /edit
+  app.get("/sorties/edit/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM SORTIE WHERE idSortie = $1";
+    pool.query(sql, [id], (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.render("sorties/edit", { model: result.rows[0] , moment: moment  });
+    });
+  });
+
+    // POST /edit
+    app.post("/sorties/edit/:id", (req, res) => {
+        const id = req.params.id;
+        const book = [req.body.nom, req.body.date, req.body.prix, req.body.nb, req.body.lieu, req.body.prod, id];
+        const sql = "UPDATE SORTIE SET nomSortie  = $1, dateSortie  = $2, prixSortie   = $3, nbParticipants  =$4, lieuSortie =$5, idProduit  =$6 WHERE idSortie = $7";
+        pool.query(sql, book, (err, result) => {
+          if (err) {
+            return console.error(err.message);
+          }
+          res.redirect("/sorties");
+        });
+      });
+
+
+  // GET /delete
+  app.get("/sorties/delete/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM SORTIE WHERE idSortie = $1";
+    pool.query(sql, [id], (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.render("sorties/delete", { model: result.rows[0] , moment: moment });
+    });
+  });
+  
+  // POST /delete
+  app.post("/sorties/delete/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = "DELETE FROM SORTIE WHERE idSortie = $1";
+    pool.query(sql, [id], (err, result) => {
+      if (err) {s
+        return console.error(err.message);
+      }
+      res.redirect("/sorties");
+    });
+  });
+
+    //Transactions
+  // GET /transactions
+  app.get("/transactions", (req, res) => {
+    const sql = "SELECT * FROM TRANSACTION ORDER BY dateTransaction";
+    pool.query(sql, [], (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.render("transactions/index", { model: result.rows , moment: moment });
+    });
+  });
+  
+
+  // GET /create
+  app.get("/transactions/create", (req, res) => {
+    res.render("transactions/create", { model: {} , moment: moment });
+  });
+
+
+  // POST /create
+  app.post("/transactions/create", (req, res) => {
+    const sql = "INSERT INTO TRANSACTION (idTransaction, typeTransaction, dateTransaction, methodePaiement, numAdherent, montantTransaction) VALUES($1, $2, $3, $4, $5, $6)";
+    const book = [req.body.id, req.body.type, req.body.date, req.body.methode, req.body.num, req.body.montant];
+    pool.query(sql, book, (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.redirect("/transactions");
+    });
+  });
+  
+  
+  // GET /edit
+  app.get("/transactions/edit/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM TRANSACTION WHERE idTransaction = $1";
+    pool.query(sql, [id], (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.render("transactions/edit", { model: result.rows[0] , moment: moment  });
+    });
+  });
+
+    // POST /edit
+    app.post("/transactions/edit/:id", (req, res) => {
+        const id = req.params.id;
+        const book = [req.body.type, req.body.date, req.body.methode, req.body.num, req.body.montant, id];
+        const sql = "UPDATE TRANSACTION SET typeTransaction   = $1, dateTransaction   = $2, methodePaiement    = $3, numAdherent   =$4, montantTransaction  =$5 WHERE idTransaction = $6";
+        pool.query(sql, book, (err, result) => {
+          if (err) {
+            return console.error(err.message);
+          }
+          res.redirect("/transactions");
+        });
+      });
+
+
+  // GET /delete
+  app.get("/transactions/delete/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM TRANSACTION WHERE idTransaction = $1";
+    pool.query(sql, [id], (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.render("transactions/delete", { model: result.rows[0] , moment: moment });
+    });
+  });
+  
+  // POST /delete
+  app.post("/transactions/delete/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = "DELETE FROM TRANSACTION WHERE idTransaction = $1";
+    pool.query(sql, [id], (err, result) => {
+      if (err) {s
+        return console.error(err.message);
+      }
+      res.redirect("/transactions");
     });
   });
