@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 
 const pool = new Pool({
   user: "postgres_user",
-  host: "localhost",
+  host: "postgres",
   database: "postgres_user",
   password: "postgres_password",
   port: 5432
@@ -24,7 +24,7 @@ console.log("Connexion réussie à la base de données");
 
 
 // Démarrage du serveur
-app.listen(3000), () => {
+app.listen(3000, () => {
   console.log("Serveur démarré (http://localhost:3000/) !");
 });
 

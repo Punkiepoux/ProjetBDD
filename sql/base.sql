@@ -244,135 +244,43 @@ END;
 $$ LANGUAGE plpgsql;
 
 
--- Sample data for ADHERENT table
-INSERT INTO ADHERENT (
-        nomAdherent,
-        prenomAdherent,
-        promotionAdherent,
-        roleAdherent,
-        telAdherent,
-        mailAdherent,
-        adresseAdherent,
-        ardoiseAdherent
-    )
-VALUES (
-        'Smith',
-        'John',
-        'A1',
-        'Member',
-        '123456789',
-        'john@example.com',
-        '123 Main St',
-        0
-    ),
-    (
-        'Doe',
-        'Jane',
-        'A2',
-        'Treasurer',
-        '987654321',
-        'jane@example.com',
-        '456 Elm St',
-        0
-    ),
-    (
-        'Johnson',
-        'Robert',
-        'ALUMNI',
-        'Alumni',
-        '555555555',
-        'robert@example.com',
-        '789 Oak St',
-        0
-    );
--- Sample data for PRODUIT table
-INSERT INTO PRODUIT (
-        nomProduit,
-        qteProduitEnStock,
-        prixAchatProduit,
-        prixVenteProduit,
-        typeProduit
-    )
-VALUES (
-        'Pen',
-        100,
-        50,
-        100,
-        'MATERIEL'
-    ),
-    ('Chips', 50, 20, 50, 'SNACK'),
-    (
-        'Keychain',
-        30,
-        80,
-        150,
-        'GOODIES'
-    );
--- Sample data for SORTIE table
-INSERT INTO SORTIE (
-        nomSortie,
-        dateSortie,
-        prixSortie,
-        nbParticipants,
-        lieuSortie,
-        idProduit
-    )
-VALUES (
-        'Hiking Trip',
-        '2023-05-10',
-        250.00,
-        20,
-        'Mountain Trail',
-        3
-    ),
-    (
-        'Movie Night',
-        '2023-06-20',
-        100.00,
-        50,
-        'Cinema Hall',
-        2
-    );
--- Sample data for TRANSACTION table
-INSERT INTO TRANSACTION (
-        typeTransaction,
-        dateTransaction,
-        methodePaiement,
-        numAdherent,
-        montantTransaction
-    )
-VALUES (
-        'VENTEBDE',
-        '2023-05-12',
-        'CB',
-        1,
-        75.00
-    ),
-    (
-        'ACHATBDE',
-        '2023-06-25',
-        'ESPECES',
-        2,
-        120.00
-    ),
-    (
-        'AUTRE',
-        '2023-07-05',
-        'ARDOISE',
-        3,
-        30.00
-    );
--- Sample data for CONTENU_TRANSACTION table
-INSERT INTO CONTENU_TRANSACTION (
-        idTransaction,
-        idProduit,
-        qteProduitTransaction
-    )
-VALUES (1, 1, 5),
-    (2, 2, 3),
-    (3, 3, 2);
--- Sample data for PARTICIPANTS_SORTIE table
+--  Donnees factices
+INSERT INTO ADHERENT (nomAdherent, prenomAdherent, promotionAdherent, roleAdherent, telAdherent, mailAdherent, adresseAdherent, ardoiseAdherent)
+VALUES 
+    ('Dupont', 'Jean', 'A1', 'Membre', '0123456789', 'jean.dupont@email.com', '123 Rue de la République', 0),
+    ('Martin', 'Sophie', 'A2', 'Trésorier', '0987654321', 'sophie.martin@email.com', '456 Avenue des Fleurs', 10),
+    ('Lefevre', 'Pierre', 'A3', 'Secrétaire', '1122334455', 'pierre.lefevre@email.com', '789 Boulevard Voltaire', 5),
+    ('Dubois', 'Alice', 'ALUMNI', 'Ancien Membre', '5544332211', 'alice.dubois@email.com', '987 Rue de la Paix', 0);
+
+INSERT INTO PRODUIT (nomProduit, qteProduitEnStock, prixAchatProduit, prixVenteProduit, typeProduit)
+VALUES 
+    ('Stylo', 100, 50, 100, 'GOODIES'),
+    ('Sac à dos', 50, 200, 300, 'GOODIES'),
+    ('Chips', 200, 20, 50, 'SNACK'),
+    ('T-shirt', 80, 150, 250, 'GOODIES'),
+    ('Sortie ski', 20, 500, 800, 'SORTIE');
+INSERT INTO SORTIE (nomSortie, dateSortie, prixSortie, nbParticipants, lieuSortie, idProduit)
+VALUES 
+    ('Excursion en montagne', '2023-06-15', 25.50, 30, 'Montagnes des Alpes', 5),
+    ('Journée à la plage', '2023-07-20', 12.75, 50, 'Plage de la Côte d Azur', 5),
+    ('Visite musée', '2023-08-10', 8.20, 15, 'Musée du Louvre', 5);
+
+INSERT INTO TRANSACTION (typeTransaction, dateTransaction, methodePaiement, numAdherent, montantTransaction)
+VALUES 
+    ('VENTEBDE', '2023-06-10', 'CB', 1, 75.00),
+    ('ACHATBDE', '2023-07-05', 'ESPECES', 2, 250.00),
+    ('AUTRE', '2023-08-20', 'ARDOISE', 3, 30.00),
+    ('VENTEBDE', '2023-06-02', 'CB', 4, 100.00);
+
+INSERT INTO CONTENU_TRANSACTION (idTransaction, idProduit, qteProduitTransaction)
+VALUES 
+    (1, 1, 5),
+    (2, 4, 2),
+    (3, 3, 10),
+    (4, 5, 1);
 INSERT INTO PARTICIPANTS_SORTIE (numAdherent, idSortie)
-VALUES (1, 1),
+VALUES 
+    (1, 1),
     (2, 2),
-    (3, 1);
+    (3, 3),
+    (4, 1);
