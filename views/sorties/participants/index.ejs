@@ -11,6 +11,9 @@
     <thead>
       <tr>
         <th>N° Adherent</th>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Promotion</th>
         <th class="d-print-none">
           <a class="btn btn-sm btn-success" href="/sorties/participants/<%= id %>/create">Ajouter</a>
         </th>
@@ -20,6 +23,9 @@
       <% for (const participant of model) { %>
         <tr>
           <td><%= participant.numadherent   %></td>
+          <td><%= participant.prenomadherent  %></td>
+          <td><%= participant.nomadherent  %></td>
+          <td><%= participant.promotionadherent   %></td>
           <td class="d-print-none">
             <a class="btn btn-sm btn-danger" href="/sorties/participants/<%= id %>/delete/<%= participant.numadherent %>">Effacer</a>
           </td>

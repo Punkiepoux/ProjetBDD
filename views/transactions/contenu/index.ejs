@@ -11,6 +11,9 @@
     <thead>
       <tr>
         <th>Id Produit</th>
+        <th>Nom</th>
+        <th>Stock</th>
+        <th>Type</th>
         <th>Quantité</th>
         <th class="d-print-none">
           <a class="btn btn-sm btn-success" href="/transactions/contenu/<%= id %>/create">Ajouter</a>
@@ -21,6 +24,9 @@
       <% for (const transaction of model) { %>
         <tr>
           <td><%= transaction.idproduit   %></td>
+          <td><%= transaction.nomproduit  %></td>
+          <td><%= transaction.qteproduitenstock   %></td>
+          <td><%= transaction.typeproduit   %></td>
           <td><%= transaction.qteproduittransaction    %></td>
           <td class="d-print-none">
             <a class="btn btn-sm btn-warning" href="/transactions/contenu/<%= id %>/edit/<%= transaction.idproduit %>">Modifier</a>

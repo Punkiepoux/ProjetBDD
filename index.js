@@ -24,7 +24,7 @@ console.log("Connexion réussie à la base de données");
 
 
 // Démarrage du serveur
-app.listen(3005, () => {
+app.listen(3000), () => {
   console.log("Serveur démarré (http://localhost:3000/) !");
 });
 
@@ -70,8 +70,8 @@ app.get("/adherents/create", (req, res) => {
 
 // POST /create
 app.post("/adherents/create", (req, res) => {
-  const sql = "INSERT INTO ADHERENT (numAdherent, nomAdherent, prenomAdherent, promotionAdherent, roleAdherent, telAdherent, mailAdherent, adresseAdherent, ardoiseAdherent) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)";
-  const book = [req.body.num, req.body.nom, req.body.prenom, req.body.promo, req.body.role, req.body.tel, req.body.mail, req.body.adresse, req.body.ardoise];
+  const sql = "INSERT INTO ADHERENT ( nomAdherent, prenomAdherent, promotionAdherent, roleAdherent, telAdherent, mailAdherent, adresseAdherent, ardoiseAdherent) VALUES($1, $2, $3, $4, $5, $6, $7, $8)";
+  const book = [ req.body.nom, req.body.prenom, req.body.promo, req.body.role, req.body.tel, req.body.mail, req.body.adresse, req.body.ardoise];
   pool.query(sql, book, (err, result) => {
     if (err) {
       console.error(err.message);
@@ -163,8 +163,8 @@ app.get("/produits/create", (req, res) => {
 
 // POST /create
 app.post("/produits/create", (req, res) => {
-  const sql = "INSERT INTO PRODUIT (idProduit , nomProduit , qteProduitEnStock , prixAchatProduit , prixVenteProduit , typeProduit) VALUES($1, $2, $3, $4, $5, $6)";
-  const book = [req.body.id, req.body.nom, req.body.stock, req.body.achat, req.body.vente, req.body.type];
+  const sql = "INSERT INTO PRODUIT (nomProduit , qteProduitEnStock , prixAchatProduit , prixVenteProduit , typeProduit) VALUES($1, $2, $3, $4, $5)";
+  const book = [req.body.nom, req.body.stock, req.body.achat, req.body.vente, req.body.type];
   pool.query(sql, book, (err, result) => {
     if (err) {
       res.render("produits/create",{ model: {}, error: err.message });
@@ -252,8 +252,8 @@ app.get("/sorties/create", (req, res) => {
 
 // POST /create
 app.post("/sorties/create", (req, res) => {
-  const sql = "INSERT INTO SORTIE (idSortie, nomSortie, dateSortie, prixSortie, nbParticipants, lieuSortie, idProduit) VALUES($1, $2, $3, $4, $5, $6, $7)";
-  const book = [req.body.id, req.body.nom, req.body.date, req.body.prix, req.body.nb, req.body.lieu, req.body.prod];
+  const sql = "INSERT INTO SORTIE ( nomSortie, dateSortie, prixSortie, nbParticipants, lieuSortie, idProduit) VALUES($1, $2, $3, $4, $5, $6)";
+  const book = [ req.body.nom, req.body.date, req.body.prix, req.body.nb, req.body.lieu, req.body.prod];
   pool.query(sql, book, (err, result) => {
     if (err) {
       res.render("sorties/create",{ model: {}, moment: moment, error: err.message });
@@ -341,8 +341,8 @@ app.get("/transactions/create", (req, res) => {
 
 // POST /create
 app.post("/transactions/create", (req, res) => {
-  const sql = "INSERT INTO TRANSACTION (idTransaction, typeTransaction, dateTransaction, methodePaiement, numAdherent, montantTransaction) VALUES($1, $2, $3, $4, $5, $6)";
-  const book = [req.body.id, req.body.type, req.body.date, req.body.methode, req.body.num, req.body.montant];
+  const sql = "INSERT INTO TRANSACTION (typeTransaction, dateTransaction, methodePaiement, numAdherent, montantTransaction) VALUES($1, $2, $3, $4, $5)";
+  const book = [ req.body.type, req.body.date, req.body.methode, req.body.num, req.body.montant];
   pool.query(sql, book, (err, result) => {
     if (err) {
       res.render("transactions/create", { model: {}, moment: moment , error: err.message});
@@ -412,7 +412,7 @@ app.post("/transactions/delete/:id", (req, res) => {
 // GET /transactions
 app.get("/transactions/contenu/:id_transaction", (req, res) => {
   const id = req.params.id_transaction;
-  const sql = "SELECT * FROM CONTENU_TRANSACTION WHERE idTransaction = $1";
+  const sql = "SELECT * FROM getContenuTransaction($1)";
   pool.query(sql, [id], (err, result) => {
     if (err) {
       res.render("transactions/contenu/index", { model: {}, moment: moment , error: err.message});
@@ -507,7 +507,7 @@ app.post("/transactions/contenu/:id_transaction/delete/:id_produit", (req, res) 
 // GET 
 app.get("/sorties/participants/:id_sortie", (req, res) => {
   const id = req.params.id_sortie;
-  const sql = "SELECT * FROM PARTICIPANTS_SORTIE  WHERE idSortie = $1";
+  const sql = "SELECT * FROM getParticipantsSortie($1)";
   pool.query(sql, [id], (err, result) => {
     if (err) {
       res.render("sorties/participants/index", { model: {}, moment: moment , error: err.message});

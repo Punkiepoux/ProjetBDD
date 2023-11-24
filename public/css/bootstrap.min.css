@@ -9248,4 +9248,8 @@ a.text-dark:focus, a.text-dark:hover {
     }
 }
 
+.form-group.required .control-label:after { 
+    content:"*";
+    color:red;
+ }
 /*# sourceMappingURL=bootstrap.min.css.map */

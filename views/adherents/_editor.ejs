@@ -1,56 +1,62 @@
 
   
-  <div class="form-group row">
-    <label class="col-form-label col-sm-2" for="nom">Nom :</label>
+  <div class="form-group row required ">
+    <label class="col-form-label col-sm-2 control-label" for="nom">Nom</label>
     <div class="col-sm-7">
       <input class="form-control" name="nom" value="<%= model.nomadherent %>" />
     </div>
   </div>
   
-  <div class="form-group row">
-    <label class="col-form-label col-sm-2" for="prenom">Prenom :</label>
+  <div class="form-group row required">
+    <label class="col-form-label col-sm-2 control-label" for="prenom">Prenom</label>
     <div class="col-sm-8">
       <input autofocus class="form-control" name="prenom" value="<%= model.prenomadherent %>" />
     </div>
   </div>
 
-  <div class="form-group row">
-    <label class="col-form-label col-sm-2" for="promo">Promotion :</label>
+  <div class="form-group row required">
+    <label class="col-form-label col-sm-2 control-label" for="promo">Promotion</label>
     <div class="col-sm-8">
-      <input autofocus class="form-control" name="promo" value="<%= model.promotionadherent %>" />
+      <select class="form-select" aria-label="Default select example" name="promo" value="<%= model.promotionadherent %>">
+        <option selected><%= model.promotionadherent %></option>
+        <option value="A1">A1</option>
+        <option value="A2">A2</option>
+        <option value="A3">A3</option>
+        <option value="ALUMNI">ALUMNI</option>
+      </select>
     </div>
   </div>
 
-  <div class="form-group row">
-    <label class="col-form-label col-sm-2" for="role">Role :</label>
+  <div class="form-group row required">
+    <label class="col-form-label col-sm-2 control-label" for="role">Role</label>
     <div class="col-sm-8">
       <input autofocus class="form-control" name="role" value="<%= model.roleadherent %>" />
     </div>
   </div>
 
-  <div class="form-group row">
-    <label class="col-form-label col-sm-2" for="tel">Telephone :</label>
+  <div class="form-group row ">
+    <label class="col-form-label col-sm-2 " for="tel">Telephone</label>
     <div class="col-sm-8">
       <input autofocus class="form-control" name="tel" value="<%= model.teladherent %>" />
     </div>
   </div>
 
   <div class="form-group row">
-    <label class="col-form-label col-sm-2" for="mail">Mail :</label>
+    <label class="col-form-label col-sm-2" for="mail">Mail</label>
     <div class="col-sm-8">
       <input autofocus class="form-control" name="mail" value="<%= model.mailadherent %>" />
     </div>
   </div>
 
   <div class="form-group row">
-    <label class="col-form-label col-sm-2" for="adresse">Adresse :</label>
+    <label class="col-form-label col-sm-2" for="adresse">Adresse</label>
     <div class="col-sm-8">
       <input autofocus class="form-control" name="adresse" value="<%= model.adresseadherent %>" />
     </div>
   </div>
   
   <div class="form-group row">
-    <label class="col-form-label col-sm-2" for="ardoise">Ardoise :</label>
+    <label class="col-form-label col-sm-2" for="ardoise">Ardoise</label>
     <div class="col-sm-8">
       <input autofocus class="form-control" name="ardoise" value="<%= model.ardoiseadherent %>" />
     </div>

@@ -1,35 +1,43 @@
   
-  <div class="form-group row">
-    <label class="col-form-label col-sm-2" for="nom">Nom :</label>
+  <div class="form-group row required">
+    <label class="col-form-label col-sm-2 control-label" for="nom">Nom</label>
     <div class="col-sm-7">
       <input class="form-control" name="nom" value="<%= model.nomproduit  %>" />
     </div>
   </div>
   
-  <div class="form-group row">
-    <label class="col-form-label col-sm-2" for="stock">Stock Produit :</label>
+  <div class="form-group row required">
+    <label class="col-form-label col-sm-2 control-label" for="stock">Stock Produit</label>
     <div class="col-sm-8">
       <input autofocus class="form-control" name="stock" value="<%= model.qteproduitenstock %>" />
     </div>
   </div>
 
   <div class="form-group row">
-    <label class="col-form-label col-sm-2" for="achat">Prix d'Achat :</label>
+    <label class="col-form-label col-sm-2" for="achat">Prix d'Achat</label>
     <div class="col-sm-8">
       <input autofocus class="form-control" name="achat" value="<%= model.prixachatproduit  %>" />
     </div>
   </div>
 
   <div class="form-group row">
-    <label class="col-form-label col-sm-2" for="vente">Prix de Vente :</label>
+    <label class="col-form-label col-sm-2" for="vente">Prix de Vente</label>
     <div class="col-sm-8">
       <input autofocus class="form-control" name="vente" value="<%= model.prixventeproduit  %>" />
     </div>
   </div>
 
   <div class="form-group row">
-    <label class="col-form-label col-sm-2" for="type">Type  :</label>
+    <label class="col-form-label col-sm-2" for="type">Type</label>
     <div class="col-sm-8">
-      <input autofocus class="form-control" name="type" value="<%= model.typeproduit  %>" />
+      <select class="form-select" aria-label="Default select example" name="type" value="<%= model.typeproduit %>">
+        <option selected><%= model.typeproduit %></option>
+        <option value="MATERIEL">MATERIEL</option>
+        <option value="SNACK">SNACK</option>
+        <option value="GOODIES">GOODIES</option>
+        <option value="SORTIE">SORTIE</option>
+      </select>
     </div>
   </div>
+
+

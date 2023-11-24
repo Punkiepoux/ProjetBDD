@@ -208,6 +208,42 @@ CREATE TRIGGER VerifArdoise BEFORE
 INSERT
     OR
 UPDATE ON TRANSACTION FOR EACH ROW EXECUTE PROCEDURE VerifArdoise();
+
+--Procedures
+CREATE OR REPLACE FUNCTION getParticipantsSortie(p_sortie_id INT)
+RETURNS TABLE (
+    numAdherent INT,
+    nomAdherent VARCHAR(255),
+    prenomAdherent VARCHAR(255),
+    promotionAdherent PROMOTION
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT A.numAdherent, A.nomAdherent, A.prenomAdherent, A.promotionAdherent
+    FROM ADHERENT A
+    JOIN PARTICIPANTS_SORTIE PS ON A.numAdherent = PS.numAdherent
+    WHERE PS.idSortie = p_sortie_id;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION getContenuTransaction(p_transaction_id  INT)
+RETURNS TABLE (
+    idProduit INT,
+    nomProduit VARCHAR(255),
+    qteProduitEnStock INT,
+     typeProduit TYPE_PRODUIT_BDE,
+     qteProduitTransaction INT
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT P.idProduit, P.nomProduit, P.qteProduitEnStock, P.typeProduit, CT.qteProduitTransaction
+    FROM PRODUIT P
+    JOIN CONTENU_TRANSACTION CT  ON P.idProduit = CT.idProduit
+    WHERE CT.idTransaction = p_transaction_id;
+END;
+$$ LANGUAGE plpgsql;
+
+
 -- Sample data for ADHERENT table
 INSERT INTO ADHERENT (
         nomAdherent,

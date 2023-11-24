@@ -18,7 +18,7 @@
     <div class="form-group row">
       <label class="col-form-label col-sm-2" for="date">Date :</label>
       <div class="col-sm-8">
-        <input autofocus class="form-control" name="date" value="<%= moment(model.datesortie).format('YYYY-MM-DD')  %>" />
+        <input autofocus class="form-control" name="date" type="date" value="<%= moment(model.datesortie).format('YYYY-MM-DD')  %>" />
       </div>
     </div>
     <%- include("_editor") -%>

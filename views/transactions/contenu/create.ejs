@@ -9,22 +9,22 @@
 <form action="/transactions/contenu/<%= id%>/create" method="post">
   <div class="form-horizontal">
       <div class="form-group row">
-        <label class="col-form-label col-sm-2" for="trans">Id Transaction :</label>
+        <label class="col-form-label col-sm-2" for="trans">Id Transaction</label>
         <div class="col-sm-8">
           <input readonly class="form-control" name="trans" value="<%= id %>" />
         </div>
       </div>
   
       <div class="form-horizontal">
-        <div class="form-group row">
-          <label class="col-form-label col-sm-2" for="prod">Id Produit :</label>
+        <div class="form-group row required">
+          <label class="col-form-label col-sm-2 control-label" for="prod">Id Produit</label>
           <div class="col-sm-8">
             <input autofocus class="form-control" name="prod" value="<%= model.idproduit %>" />
           </div>
         </div>
         <div class="form-horizontal">
           <div class="form-group row">
-            <label class="col-form-label col-sm-2" for="qte">Quantité :</label>
+            <label class="col-form-label col-sm-2" for="qte">Quantité</label>
             <div class="col-sm-8">
               <input autofocus class="form-control" name="qte" value="<%= model.qteproduittransaction %>" />
             </div>
