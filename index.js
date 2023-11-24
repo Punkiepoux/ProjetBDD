@@ -87,7 +87,9 @@ app.post("/adherents/create", (req, res) => {
   const book = [req.body.num, req.body.nom, req.body.prenom, req.body.promo, req.body.role, req.body.tel, req.body.mail, req.body.adresse, req.body.ardoise];
   pool.query(sql, book, (err, result) => {
     if (err) {
-      return console.error(err.message);
+      console.error(err.message);
+        res.render("adherent/createerror", { message: 'Erreur 500 : erreur lors de la création' });
+        return;
     }
     res.redirect("/adherents");
   });
@@ -100,7 +102,9 @@ app.get("/adherents/edit/:id", (req, res) => {
   const sql = "SELECT * FROM ADHERENT WHERE numAdherent = $1";
   pool.query(sql, [id], (err, result) => {
     if (err) {
-      return console.error(err.message);
+      console.error(err.message);
+        res.render("adherent/editerror", { message: 'Erreur 500 : erreur lors de la modification' });
+        return;
     }
     res.render("adherents/edit", { model: result.rows[0] });
   });
@@ -113,7 +117,9 @@ app.post("/adherents/edit/:id", (req, res) => {
   const sql = "UPDATE ADHERENT SET nomAdherent  = $1, prenomAdherent  = $2, promotionAdherent   = $3, roleAdherent  =$4, telAdherent =$5, mailAdherent  =$6, adresseAdherent =$7, ardoiseAdherent =$8 WHERE numAdherent = $9";
   pool.query(sql, book, (err, result) => {
     if (err) {
-      return console.error(err.message);
+      console.error(err.message);
+            res.render("adherent/editerror", { message: 'Erreur 500 : erreur lors de la modification' });
+            return;
     }
     res.redirect("/adherents");
   });
@@ -126,7 +132,9 @@ app.get("/adherents/delete/:id", (req, res) => {
   const sql = "SELECT * FROM ADHERENT WHERE numAdherent = $1";
   pool.query(sql, [id], (err, result) => {
     if (err) {
-      return console.error(err.message);
+      console.error(err.message);
+        res.render("adherent/editerror", { message: 'Erreur 500 : erreur lors de la suppression' });
+        return;
     }
     res.render("adherents/delete", { model: result.rows[0] });
   });
@@ -138,8 +146,9 @@ app.post("/adherents/delete/:id", (req, res) => {
   const sql = "DELETE FROM ADHERENT WHERE numAdherent = $1";
   pool.query(sql, [id], (err, result) => {
     if (err) {
-      s
-      return console.error(err.message);
+      console.error(err.message);
+        res.render("adherent/editerror", { message: 'Erreur 500 : erreur lors de la suppression' });
+        return;
     }
     res.redirect("/adherents");
   });

@@ -1,0 +1,40 @@
+<%- include("../_header") -%>
+
+<h1> Catalogue des produits du BDE </h1>
+
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Id Produit</th>
+        <th>Nom</th>
+        <th>Stock</th>
+        <th>Prix d'achat/th>
+        <th>Prix de vente</th>
+        <th>Type</th>
+        <th class="d-print-none">
+          <a class="btn btn-sm btn-success" href="/produits/create">Ajouter</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (const produit of model) { %>
+        <tr>
+          <td><%= produit.idproduit  %></td>
+          <td><%= produit.nomproduit  %></td>
+          <td><%= produit.nomadherent  %></td>
+          <td><%= produit.qteproduitenstock   %></td>
+          <td><%= produit.prixachatproduit   %></td>
+          <td><%= produit.prixventeproduit   %></td>
+          <td><%= produit.typeproduit   %></td>
+          <td class="d-print-none">
+            <a class="btn btn-sm btn-warning" href="/produits/edit/<%= produit.idproduit %>">Modifier</a>
+            <a class="btn btn-sm btn-danger" href="/produits/delete/<%= produit.idproduit %>">Effacer</a>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include("../_footer") -%>

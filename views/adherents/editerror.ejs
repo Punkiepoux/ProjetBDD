@@ -1,11 +1,11 @@
-<%- include("../_header") -%>
+<%- include("_header") -%>
 
-<h1>Effacer un adhérent</h1>
+<h1>Effacer adhérent ?</h1>
 
-<form action="/adherents/delete/<%= model.numadherent %>" method="post">
+<form action="/adherent/edit/<%= model.numadherent %>" method="post">
     <div class="form-horizontal">
   
-      <%- include("_display") -%>
+      <%- include("_adhdisplay") -%>
   
       <div class="form-group row">
         <label class="col-form-label col-sm-2"></label>
@@ -17,4 +17,4 @@
     </div>
 </form>
 
-<%- include("../_footer") -%>
+<%- include("_footer") -%>

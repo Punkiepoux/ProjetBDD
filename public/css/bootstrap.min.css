@@ -5167,9 +5167,9 @@ tbody.collapse.show {
 }
 
 .alert-warning {
-    color: #856404;
-    background-color: #fff3cd;
-    border-color: #ffeeba
+    color: white;
+    background-color: red;
+    border-color: black
 }
 
 .alert-warning hr {
