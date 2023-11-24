@@ -4,6 +4,8 @@
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css
+
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -9203,7 +9205,7 @@ a.text-dark:focus, a.text-dark:hover {
     }
 
     img, tr {
-        page-break-inside: avoid
+        page-break-inside: avoid;
     }
 
     h2, h3, p {
@@ -9246,6 +9248,32 @@ a.text-dark:focus, a.text-dark:hover {
     .table-bordered td, .table-bordered th {
         border: 1px solid #ddd !important
     }
+}
+
+table.dataTable tbody tr {
+    background-color: #002752 !important
+}
+
+.dataTables_wrapper .dataTables_length, 
+.dataTables_wrapper .dataTables_filter, 
+.dataTables_wrapper .dataTables_info, 
+.dataTables_wrapper .dataTables_processing, 
+.dataTables_wrapper .dataTables_paginate {
+    color: white !important
+}
+
+body .dataTables_wrapper .dataTables_paginate .paginate_button.disabled, 
+body .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, 
+body .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+    color: white !important
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    color: white;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    color: white;
 }
 
 /*# sourceMappingURL=bootstrap.min.css.map */
