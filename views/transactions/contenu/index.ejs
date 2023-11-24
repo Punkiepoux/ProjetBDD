@@ -1,0 +1,31 @@
+<%- include("../../_header") -%>
+
+<h1> Contenu de la transaction <%= id %> </h1>
+
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Id Produit</th>
+        <th>Quantité</th>
+        <th class="d-print-none">
+          <a class="btn btn-sm btn-success" href="/transactions/contenu/<%= id %>/create">Ajouter</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (const transaction of model) { %>
+        <tr>
+          <td><%= transaction.idproduit   %></td>
+          <td><%= transaction.qteproduittransaction    %></td>
+          <td class="d-print-none">
+            <a class="btn btn-sm btn-warning" href="/transactions/contenu/<%= id %>/edit/<%= transaction.idproduit %>">Modifier</a>
+            <a class="btn btn-sm btn-danger" href="/transactions/contenu/<%= id %>/delete/<%= transaction.idproduit %>">Effacer</a>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include("../../_footer") -%>

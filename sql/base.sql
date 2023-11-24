@@ -106,9 +106,9 @@ AS $$
 DECLARE
     dates_nok boolean := false;
     sortie_ok boolean := false;
-    l_typeTransaction TYPE_TRANSACTION_BDE := 'Autre';
+    l_typeTransaction TYPE_TRANSACTION_BDE := 'AUTRE';
 BEGIN
- SELECT P.typeProduit = 'Sortie'
+ SELECT P.typeProduit = 'SORTIE'
  INTO sortie_ok
  FROM produit P
  WHERE P.idProduit = new.idProduit;
@@ -123,7 +123,7 @@ BEGIN
              INTO l_typeTransaction
              FROM TRANSACTION T
              WHERE T.idTransaction = new.idTransaction;
-                IF l_typeTransaction = 'VenteBDE' THEN
+                IF l_typeTransaction = 'VENTEBDE' THEN
                     UPDATE PRODUIT   
                     SET qteProduitEnStock = qteProduitEnStock + CONTENU_TRANSACTION.qteProduitTransaction
                     FROM CONTENU_TRANSACTION
@@ -158,7 +158,7 @@ RETURNS TRIGGER
 AS $$
 DECLARE
     stock int :=0;
-    l_typeTransaction TYPE_TRANSACTION_BDE := 'Autre';
+    l_typeTransaction TYPE_TRANSACTION_BDE := 'AUTRE';
 BEGIN
  SELECT T.typeTransaction
  INTO l_typeTransaction
@@ -168,7 +168,7 @@ BEGIN
     INTO stock
     FROM PRODUIT P
     WHERE  P.idProduit = new.idProduit;
-    IF l_typeTransaction = 'VenteBDE' THEN
+    IF l_typeTransaction = 'VENTEBDE' THEN
         IF (stock >= 0) THEN
             UPDATE PRODUIT   
             SET qteProduitEnStock =stock
@@ -176,7 +176,7 @@ BEGIN
             RETURN new;
         ELSE
             RAISE INFO 'stock produit insuffisant, transaction annulée!' ;
-            IF l_typeTransaction = 'VenteBDE' THEN
+            IF l_typeTransaction = 'VENTEBDE' THEN
                     UPDATE PRODUIT   
                     SET qteProduitEnStock = qteProduitEnStock + CONTENU_TRANSACTION.qteProduitTransaction
                     FROM CONTENU_TRANSACTION

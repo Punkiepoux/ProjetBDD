@@ -1,0 +1,33 @@
+<%- include("../../_header") -%>
+
+<h1>Effacer ce contenu ?</h1>
+
+<form action="/sorties/participants/<%= id%>/delete/<%= model.numadherent %>" method="post">
+    <div class="form-horizontal">
+  
+      <div class="form-group row">
+        <label class="col-form-label col-sm-2" for="sortie">Id Sortie :</label>
+        <div class="col-sm-8">
+          <input readonly class="form-control" name="sortie" value="<%= model.idsortie %>" />
+        </div>
+      </div>
+  
+      <div class="form-horizontal">
+        <div class="form-group row">
+          <label class="col-form-label col-sm-2" for="num">N° Adherent :</label>
+          <div class="col-sm-8">
+            <input readonly class="form-control" name="num" value="<%= model.numadherent %>" />
+          </div>
+        </div>
+        
+      <div class="form-group row">
+        <label class="col-form-label col-sm-2"></label>
+        <div class="col-sm-10">
+          <input type="submit" value="Effacer" class="btn btn-default btn-danger" />
+          <a class="btn btn-outline-dark cancel" href="/sorties/participants/<%= id%>/">Annuler</a>
+        </div>
+      </div>
+    </div>
+</form>
+
+<%- include("../../_footer") -%>
