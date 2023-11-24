@@ -1,7 +1,11 @@
 <%- include("../_header") -%>
 
 <h1> Catalogue des produits du BDE </h1>
-
+<% if(typeof (error) != "undefined"){ %>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong><%=  error  %></strong>
+  </div>
+<% } %>
 <div class="table-responsive-sm">
   <table class="table table-hover">
     <thead>

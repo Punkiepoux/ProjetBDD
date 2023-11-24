@@ -1,6 +1,11 @@
 <%- include("../_header") -%>
 
 <h1>Ajouter un adhérent</h1>
+<% if(typeof (error) != "undefined"){ %>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong><%=  error  %></strong>
+  </div>
+<% } %>
 
 <form action="/adherents/create" method="post">
   <div class="form-horizontal">
@@ -21,5 +26,8 @@
     </div>
   </div>
 </form>
+
+
+
 
 <%- include("../_footer") -%>
