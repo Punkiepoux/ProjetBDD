@@ -7,7 +7,7 @@
   </div>
 <% } %>
 <div class="table-responsive-sm">
-  <table class="table table-hover">
+  <table class="table table-hover" id="adherents">
     <thead>
       <tr>
         <th>N°</th>
@@ -44,6 +44,19 @@
       <% } %>
     </tbody>
   </table>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Inclure Datatables -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+
+  <!-- Initialiser Datatables -->
+  <script>
+    $(document).ready(function() {
+        $('#adherents').DataTable();
+    });
+  </script>
 </div>
 
 <%- include("../_footer") -%>
